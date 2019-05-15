@@ -1,8 +1,8 @@
 'use strict'
 
-var fs= require('fs');
-var path= require('path');
-var mongoosePaginate= require('mongoose-pagination');
+const fs= require('fs');
+const path= require('path');
+const mongoosePaginate= require('mongoose-pagination');
 
 var Artist = require('../models/artist');
 var Album = require('../models/album');
@@ -119,7 +119,7 @@ function uploadImage(req, res){
 
 	if(req.files){
 		var file_path = req.files.image.path;
-		var file_split = file_path.split('\\');
+		var file_split = file_path.split('\/');
 		var file_name = file_split[2];
 
 		var ext_split = file_name.split('\.');

@@ -2,14 +2,8 @@
 var bcrypt= require('bcrypt-nodejs');
 var User = require('../models/user');
 var jwt = require('../services/jwt');
-var fs= require('fs');
-var path= require('path');
-
-function pruebas(req, res){
-	res.status(200).send({
-		message:'probando accion controlador.'
-	});
-}
+const fs= require('fs');
+const path= require('path');
 
 function saveUser(req, res){
 	var user = new User();
@@ -81,6 +75,9 @@ function loginUser(req, res){
 function updateUser(req, res){
 	var userId = req.params.id;
 	var update = req.body;
+	if(userId != req.user.sub){
+		return res.status(500).send({message: 'No tienes permiso para actualizar este usuario'});
+	}
 	
 	User.findByIdAndUpdate(userId, update,{new:true}, (err, userUpdated) => {
 		if(err){
@@ -101,7 +98,7 @@ function uploadImage(req, res){
 
 	if(req.files){
 		var file_path = req.files.image.path;
-		var file_split = file_path.split('\\');
+		var file_split = file_path.split('\/');
 		var file_name = file_split[2];
 
 		var ext_split = file_name.split('\.');
@@ -137,7 +134,6 @@ function getImageFile(req, res){
 }
 
 module.exports = {
-	pruebas,
 	saveUser,
 	loginUser,
 	updateUser,
