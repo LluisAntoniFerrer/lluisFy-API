@@ -42,7 +42,7 @@ function saveAlbum(req, res){
 			if(!albumStored){
 				res.status(404).send({message: 'El album no ha sido guardado'});
 			}else{
-				res.status(200).send({artist: albumStored});
+				res.status(200).send({album: albumStored});
 			}
 		}
 	})
@@ -125,7 +125,7 @@ function uploadImage(req, res){
 		var ext_split = file_name.split('\.');
 		var file_ext = ext_split[1];
 
-		if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif'){
+		if(file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif'){
 			Album.findByIdAndUpdate(albumId,{image:file_name},{new:true}, (err, albumUpdated) =>{
 				if(!albumUpdated){
 					res.status(404).send({message: 'No se ha podido actualizar el album'});
